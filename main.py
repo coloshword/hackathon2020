@@ -128,7 +128,7 @@ def about_menu():
 
 
 def display_wpm(wpm):
-    button.draw_bordered_rounded_rect(screen, (130, 600, 350, 50), (255, 103, 0), (0, 0, 0), 5, 0, "Your WPM: " + str(wpm), (255, 255, 255), (180, 515))
+    button.draw_bordered_rounded_rect(screen, (150, 500, 350, 50), (255, 103, 0), (0, 0, 0), 5, 0, "Your WPM: " + str(wpm), (255, 255, 255), (180, 515))
     pygame.display.flip()
 
 
