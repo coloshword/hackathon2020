@@ -121,7 +121,8 @@ def about_menu():
 
 
 def display_wpm(wpm):
-    print(wpm)
+    button.draw_bordered_rounded_rect(screen, (130, 600, 350, 50), (255, 103, 0), (0, 0, 0), 5, 0, "Your WPM: " + str(wpm), (255, 255, 255), (180, 515))
+    pygame.display.flip()
 
 
 def go_to_next():
@@ -199,7 +200,6 @@ def timer(time_period, current_time):
         current_time = int(time_period - (time.time() - start))
         print(current_time)
         clock = button.draw_bordered_rounded_rect(screen, (790, 540, 150, 50), (139, 0, 0), (0, 0, 0), 10, 0, str(current_time), (0, 255, 0), (850, 555))
-
 
 
 def run_level(level):
