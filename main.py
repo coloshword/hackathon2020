@@ -60,16 +60,10 @@ def menu():
                 pygame.quit()
             elif play.collidepoint(pos) and event.type == pygame.MOUSEBUTTONDOWN:
                 menu_run = False
-                run_level(FreeTypeLevel.TypeChallenge())
-                # run_level(levels.level1())
+                run_level(levels.level1())
             elif about.collidepoint(pos) and event.type == pygame.MOUSEBUTTONDOWN:
                 menu_run = False
                 about_menu()
-
-
-def draw_cursor(x,y):
-    pygame.draw.rect(screen, (255, 255, 255), (x, y, 5, 10))
-    pygame.display.flip()
 
 
 def str_to_object(string):
@@ -252,7 +246,6 @@ def run_level(level):
     while running:
         for event in pygame.event.get():
             if (index == len(str)):
-                draw_cursor()
                 end = time.time()
                 totalTime = levels.ElapsedTime(end, start)
                 next = levels.checkAdvancement(totalTime, total_time)
