@@ -104,8 +104,15 @@ def display_chars():
 
 def about_menu():
     global above
+    about_font = pygame.font.SysFont('Arial', 35)
+    line1 = about_font.render('Practice Touch Typing:', False, (255, 255, 255))
+    line2 = about_font.render('Each level involves more', False, (255, 255, 255))
+    line3 = about_font.render('characters and fingers', False, (255, 255, 255))
     screen = pygame.display.set_mode((400, 600))
     screen.fill((250, 218, 221))
+    screen.blit(line1, (50, 100))
+    screen.blit(line2, (50, 130))
+    screen.blit(line3, (50, 160))
     back = button.draw_bordered_rounded_rect(screen, (130, 500, 150, 50), (177, 156, 217), (0, 0, 0), 5, 0, "Back", (255, 255, 255), (180, 515))
     about = True
     pygame.display.flip()
