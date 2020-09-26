@@ -14,7 +14,6 @@ char_objects = []
 # Generate text
 font = pygame.font.SysFont('Calibri', 25)
 
-
 class Letters():
     def __init__(self, char, x, y, color=(255, 255, 255)):
         self.char = char
@@ -170,6 +169,8 @@ def stay_on_level():
                     run_level(levels.level4())
                 elif current_level == 5:
                     run_level(levels.level5())
+                elif current_level == 6:
+                    run_level()
                 wait = False
 
 
