@@ -137,11 +137,35 @@ def go_to_next():
                 wait = False
 
 
+def stay_on_level():
+    white_background = button.draw_bordered_rounded_rect(screen, (150, 200, 700, 200), (255, 255, 255), (0, 0, 0), 5, 0)
+    retry = button.draw_bordered_rounded_rect(screen, (430, 340, 150, 50), ((139, 0, 0)), (0, 0, 0), 10, 0, "Retry", (255, 255, 255), (480, 355))
+    pygame.display.flip()
+    wait = True
+    while wait:
+        for event in pygame.event.get():
+            pos = pygame.mouse.get_pos()
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            if retry.collidepoint(pos) and event.type == pygame.MOUSEBUTTONDOWN:
+                if current_level == 1:
+                    run_level(levels.level1())
+                elif current_level == 2:
+                    run_level(levels.level2())
+                elif current_level == 3:
+                    run_level(levels.level3())
+                elif current_level == 4:
+                    run_level(levels.level4())
+                elif current_level == 5:
+                    run_level(levels.level5())
+                wait = False
+
+
 def run_level(level):
     global running
     global screen
     str, total_time = level
-    (width, height) = (990, 600)
+    (width, height) = (1050, 600)
     screen = pygame.display.set_mode((width, height))
     screen.fill((0, 0, 0))
     str_to_object(str)
@@ -150,6 +174,8 @@ def run_level(level):
     pygame.display.flip()
     ListOfLetters = [letter for letter in str]
     ListOfNums = []
+    ListOfKeys = [0]
+    start = 0
     for letter in ListOfLetters:
         number = ord(letter)
         ListOfNums.append(number)
@@ -161,9 +187,12 @@ def run_level(level):
                 next = levels.checkAdvancement(totalTime, total_time)
                 if next:
                     go_to_next()
+                else:
+                    stay_on_level()
                 running = False
             if event.type == pygame.KEYDOWN:
-                start = time.time()
+                if (start == 0 and index == 0):
+                    start = time.time()
                 if event.key == ListOfNums[index]:
                     char_objects[index].become_green()
                     index += 1
