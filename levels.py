@@ -64,7 +64,7 @@ def mainProcess2(lowerCase, upperCase, numOfLetters):
 
 def level1():
     possibleLetters = ['a','s','d','f','g','h','j','k',";"];
-    numOfLetters = 100
+    numOfLetters = 120
     time = 100
     string2solve = mainProcess1(possibleLetters, numOfLetters)
     return string2solve, time
@@ -72,7 +72,7 @@ def level1():
 
 def level2():
     possibleLetters = ['a','s','d','f','g','h','j','k', "r","e","u","i"]
-    numOfLetters = 110
+    numOfLetters = 140
     time = 95
     string2solve = mainProcess1(possibleLetters, numOfLetters)
     return string2solve, time
@@ -81,7 +81,7 @@ def level2():
 def level3():
     possibleLetters = ['a','s','d','f','g','h','j','k', "r","e","u","i"
                        'q', 'w', 'o', 'p']
-    numOfLetters = 120
+    numOfLetters = 150
     time = 90
     string2solve = mainProcess1(possibleLetters, numOfLetters)
     return string2solve, time
@@ -89,7 +89,7 @@ def level3():
 def level4():
     possibleLetters = ['a','s','d','f','g','h','j','k', "r","e","u","i"
                        'q', 'w', 'o', 'p', 'c', 'v', 'b', 'n']
-    numOfLetters = 130
+    numOfLetters = 155
     time = 85
     string2solve = mainProcess1(possibleLetters, numOfLetters)
     return string2solve, time
@@ -97,7 +97,7 @@ def level4():
 def level5():
     possibleLetters = ['a','s','d','f','g','h','j','k',"r","e","u","i"
                        'q', 'w', 'o', 'p', 'c', 'v', 'b', 'n', 'z', 'x','m']
-    numOfLetters = 140
+    numOfLetters = 160
     time = 80
     string2solve = mainProcess1(possibleLetters, numOfLetters)
     return string2solve, time
@@ -106,7 +106,7 @@ def level6():
     lowerLetters = ['a','s','d','f','g','h','j','k',"r","e","u","i"
                        'q', 'w', 'o', 'p', 'c', 'v', 'b', 'n', 'z', 'x','m']
     upperCase = ['A','S','D','F', 'G','H','J','K','L']
-    numOfLetters = 155
+    numOfLetters = 170
     time = 80
     string2solve = mainProcess2(lowerLetters, upperCase, numOfLetters)
     return string2solve, time
@@ -118,7 +118,7 @@ def level7():
                        'z', 'x', 'm']
     upperCase = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Q','W','E','R','T',
                  'Y','U','I','O','P']
-    numOfLetters = 175
+    numOfLetters = 180
     string2solve = mainProcess2(lowerLetters, upperCase, numOfLetters)
     return string2solve, time
 

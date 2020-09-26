@@ -3,6 +3,7 @@ import pygame.gfxdraw
 import levels
 import button
 import time
+import FreeTypeLevel
 
 pygame.init()
 pygame.display.set_caption('Type FAST')
@@ -13,6 +14,8 @@ running = True
 char_objects = []
 # Generate text
 font = pygame.font.SysFont('Calibri', 25)
+
+passFont = pygame.font.SysFont('Calibri', 60)
 
 class Letters():
     def __init__(self, char, x, y, color=(255, 255, 255)):
@@ -39,10 +42,9 @@ def menu():
     screen.fill((0, 191, 255))
     menu_run = True
     screen.blit(menu_image, (240, 20))
-    title_font = pygame.font.SysFont('Calibri', 50)
-    text = title_font.render('Touch Typer', True, (149, 85, 0))
-    textRect = text.get_rect()
-    screen.blit(text, textRect)
+    title_font = pygame.font.SysFont('Calibri', 60)
+    text = title_font.render('Touch Typer', False, (149, 85, 0))
+    screen.blit(text, (330, 400))
     about = button.draw_bordered_rounded_rect(screen, (180, 320, 150, 35), (177, 156, 217), (0, 0, 0), 5, 0, "About", (255, 255, 255), (225, 328))
     play = button.draw_bordered_rounded_rect(screen, (550, 320, 150, 35), (177, 156, 217), (0, 0, 0), 5, 0, "Play", (255, 255, 255), (600, 328))
     pygame.display.flip()
@@ -64,7 +66,7 @@ def str_to_object(string):
     char_objects = []
     x_cor = 50
     y_cor = 30
-    skinny_letters ='j;fl'
+    skinny_letters ='j;fli'
     somewhat_skinny = 'r'
     somewhat_fat = 'SF'
     fat_letters = 'wAHDGK'
@@ -118,12 +120,19 @@ def about_menu():
                 main()
 
 
+def display_wpm(wpm):
+    print(wpm)
+
+
 def go_to_next():
     global current_level
     current_level += 1
-    white_background = button.draw_bordered_rounded_rect(screen, (150, 200, 700, 200), (255, 255, 255), (0, 0, 0), 5, 0)
-    next = button.draw_bordered_rounded_rect(screen, (430, 340, 150, 50), (177, 156, 217), (0, 0, 0), 10, 0, "Next", (255, 255, 255), (480, 355))
+    white_background = button.draw_bordered_rounded_rect(screen, (170, 200, 800, 200), (255, 255, 255), (0, 0, 0), 10, 0)
+    text = passFont.render("You Pass!", False, (0, 0, 128))
+    screen.blit(text, (468, 280))
+    next = button.draw_bordered_rounded_rect(screen, (490, 340, 150, 50), (177, 156, 217), (0, 0, 0), 10, 0, "Next", (255, 255, 255), (540, 355))
     pygame.display.flip()
+    display_wpm(wpm)
     wait = True
     while wait:
         for event in pygame.event.get():
@@ -149,10 +158,13 @@ def go_to_next():
 
 
 def stay_on_level():
-    white_background = button.draw_bordered_rounded_rect(screen, (150, 200, 700, 200), (255, 255, 255), (0, 0, 0), 5, 0)
-    retry = button.draw_bordered_rounded_rect(screen, (430, 340, 150, 50), ((139, 0, 0)), (0, 0, 0), 10, 0, "Retry", (255, 255, 255), (480, 355))
-    pygame.display.flip()
+    white_background = button.draw_bordered_rounded_rect(screen, (170, 200, 800, 200), (255, 255, 255), (0, 0, 0), 10, 0)
+    text = passFont.render("Too slow", False, (0, 0, 128))
+    screen.blit(text, (468, 280))
+    retry = button.draw_bordered_rounded_rect(screen, (490, 340, 150, 50), (139, 0, 0), (0, 0, 0), 10, 0, "Retry", (255, 255, 255), (540, 355))
     wait = True
+    display_wpm(wpm)
+    pygame.display.flip()
     while wait:
         for event in pygame.event.get():
             pos = pygame.mouse.get_pos()
@@ -170,13 +182,34 @@ def stay_on_level():
                 elif current_level == 5:
                     run_level(levels.level5())
                 elif current_level == 6:
-                    run_level()
+                    run_level(levels.level6())
+                elif current_level == 7:
+                    run_level(levels.level7())
+                elif current_level == 8:
+                    run_level(levels.level8())
                 wait = False
+
+
+def timer(time_period, current_time):
+    global time_left
+    global on_off
+    # draw the timer
+    pygame.display.flip()
+    if current_time != (int(time_period - (time.time() - start))):
+        current_time = int(time_period - (time.time() - start))
+        print(current_time)
+        clock = button.draw_bordered_rounded_rect(screen, (790, 540, 150, 50), (139, 0, 0), (0, 0, 0), 10, 0, str(current_time), (0, 255, 0), (850, 555))
+
 
 
 def run_level(level):
     global running
     global screen
+    global current_time
+    global start
+    global time_left
+    global on_off
+    global wpm
     str, total_time = level
     (width, height) = (1150, 600)
     screen = pygame.display.set_mode((width, height))
@@ -189,16 +222,19 @@ def run_level(level):
     ListOfNums = []
     ListOfKeys = [0]
     start = 0
+    on_off = True
+    strSplit = str.split()
+    numOfWords = len(strSplit)
     for letter in ListOfLetters:
         number = ord(letter)
         ListOfNums.append(number)
-    print(ListOfNums)
     while running:
         for event in pygame.event.get():
             if (index == len(str)):
                 end = time.time()
                 totalTime = levels.ElapsedTime(end, start)
                 next = levels.checkAdvancement(totalTime, total_time)
+                wpm = FreeTypeLevel.wpm(totalTime, numOfWords)
                 if next:
                     go_to_next()
                 else:
@@ -208,12 +244,11 @@ def run_level(level):
                 a = event.key
                 if (start == 0 and index == 0):
                     start = time.time()
+                    current_time = total_time
                 if (a > 100000):
                     ListOfKeys.append(a)
                 else:
-
                     if ListOfLetters[index].isupper():
-
                         if (ListOfKeys[-1] > 100000 and a == ListOfNums[index] + 32):
                             char_objects[index].become_green()
                             ListOfKeys.append(a)
@@ -230,6 +265,8 @@ def run_level(level):
             if event.type == pygame.QUIT:
                 running = False
                 pygame.quit()
+        if index != 0:
+            timer(total_time, current_time)
 
 
 def main():
