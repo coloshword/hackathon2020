@@ -4,6 +4,11 @@ import levels
 import button
 import time
 import FreeTypeLevel
+import random
+fileObj = open("words.txt", "r")  # opens the file in read mode
+words = fileObj.read().splitlines()  # puts the file into an array
+fileObj.close()
+
 
 pygame.init()
 pygame.display.set_caption('Type FAST')
@@ -55,14 +60,15 @@ def menu():
                 pygame.quit()
             elif play.collidepoint(pos) and event.type == pygame.MOUSEBUTTONDOWN:
                 menu_run = False
-                run_level(levels.level1())
+                run_level(FreeTypeLevel.TypeChallenge())
+                # run_level(levels.level1())
             elif about.collidepoint(pos) and event.type == pygame.MOUSEBUTTONDOWN:
                 menu_run = False
                 about_menu()
 
 
 def draw_cursor(x,y):
-    pygame.draw.rect(screen, (255, 255, 255), (x, y, 10, 50))
+    pygame.draw.rect(screen, (255, 255, 255), (x, y, 5, 10))
     pygame.display.flip()
 
 
@@ -71,11 +77,11 @@ def str_to_object(string):
     char_objects = []
     x_cor = 50
     y_cor = 30
-    skinny_letters ='j;fli'
+    skinny_letters ='Ij;flit'
     somewhat_skinny = 'r'
-    somewhat_fat = 'SF'
-    fat_letters = 'wAHDGK'
-    obese_letters = 'm'
+    somewhat_fat = 'SFRCNU'
+    fat_letters = 'wAHDGKBM'
+    obese_letters = 'mW'
     index = 0
     for let in string:
         obj = Letters(let, x_cor, y_cor)
@@ -200,6 +206,8 @@ def stay_on_level():
                     run_level(levels.level7())
                 elif current_level == 8:
                     run_level(levels.level8())
+                elif current_level == 9:
+                    run_level(FreeTypeLevel.TypeChallenge())
                 wait = False
 
 

@@ -1,12 +1,13 @@
 import levels
 import random
-# fileObj = open("words.txt", "r")  # opens the file in read mode
-# words = fileObj.read().splitlines()  # puts the file into an array
-# fileObj.close()
+fileObj = open("words.txt", "r")  # opens the file in read mode
+words = fileObj.read().splitlines()  # puts the file into an array
+fileObj.close()
 
 
 def mainProcess3(list, numOfWords):
     i = 0
+    time = 80
     string2solve = ""
     while i < numOfWords:
         a = random.choice(list)
@@ -16,12 +17,12 @@ def mainProcess3(list, numOfWords):
         b = s.join(listOfA)
         string2solve = string2solve + b + " "
         i = i + 1
-    return string2solve
+    return string2solve, time
 
 
 def TypeChallenge():
     global numOfWords
-    numOfWords = 10
+    numOfWords = 50
     string2solve = mainProcess3(words, numOfWords)
     return string2solve
 
