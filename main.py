@@ -67,7 +67,9 @@ def str_to_object(string):
     y_cor = 30
     skinny_letters ='j;fl'
     somewhat_skinny = 'r'
-    fat_letters = 'w'
+    somewhat_fat = 'SF'
+    fat_letters = 'wAHDGK'
+    obese_letters = 'm'
     index = 0
     for let in string:
         obj = Letters(let, x_cor, y_cor)
@@ -76,8 +78,12 @@ def str_to_object(string):
             x_cor += 5
         elif let in somewhat_skinny:
             x_cor += 7
+        elif let in somewhat_fat:
+            x_cor += 11
         elif let in fat_letters:
             x_cor += 13
+        elif let in obese_letters:
+            x_cor += 15
         else:
             x_cor += 10
         if index == 100:
@@ -132,8 +138,14 @@ def go_to_next():
                     run_level(levels.level3())
                 elif current_level == 4:
                     run_level(levels.level4())
-                elif current_level ==5:
+                elif current_level == 5:
                     run_level(levels.level5())
+                elif current_level == 6:
+                    run_level(levels.level6())
+                elif current_level == 7:
+                    run_level(levels.level7())
+                elif current_level == 8:
+                    run_level(levels.level8())
                 wait = False
 
 
@@ -165,7 +177,7 @@ def run_level(level):
     global running
     global screen
     str, total_time = level
-    (width, height) = (1050, 600)
+    (width, height) = (1150, 600)
     screen = pygame.display.set_mode((width, height))
     screen.fill((0, 0, 0))
     str_to_object(str)
@@ -179,6 +191,7 @@ def run_level(level):
     for letter in ListOfLetters:
         number = ord(letter)
         ListOfNums.append(number)
+    print(ListOfNums)
     while running:
         for event in pygame.event.get():
             if (index == len(str)):
@@ -191,14 +204,28 @@ def run_level(level):
                     stay_on_level()
                 running = False
             if event.type == pygame.KEYDOWN:
+                a = event.key
                 if (start == 0 and index == 0):
                     start = time.time()
-                if event.key == ListOfNums[index]:
-                    char_objects[index].become_green()
-                    index += 1
+                if (a > 100000):
+                    ListOfKeys.append(a)
                 else:
-                    char_objects[index].become_red()
-            display_chars()
+
+                    if ListOfLetters[index].isupper():
+
+                        if (ListOfKeys[-1] > 100000 and a == ListOfNums[index] + 32):
+                            char_objects[index].become_green()
+                            ListOfKeys.append(a)
+                            index += 1
+                        else:
+                            char_objects[index].become_red()
+                    elif a == ListOfNums[index]:
+                        ListOfKeys.append(a)
+                        char_objects[index].become_green()
+                        index += 1
+                    else:
+                        char_objects[index].become_red()
+                    display_chars()
             if event.type == pygame.QUIT:
                 running = False
                 pygame.quit()
