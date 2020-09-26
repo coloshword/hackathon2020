@@ -111,6 +111,7 @@ def level6():
     string2solve = mainProcess2(lowerLetters, upperCase, numOfLetters)
     return string2solve, time
 
+
 def level7():
     time = 90
     lowerLetters = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', "r", "e", "u", "i"                                                    
@@ -121,6 +122,7 @@ def level7():
     numOfLetters = 180
     string2solve = mainProcess2(lowerLetters, upperCase, numOfLetters)
     return string2solve, time
+
 
 def level8():
     time = 85

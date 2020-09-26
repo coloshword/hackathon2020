@@ -61,6 +61,11 @@ def menu():
                 about_menu()
 
 
+def draw_cursor(x,y):
+    pygame.draw.rect(screen, (255, 255, 255), (x, y, 10, 50))
+    pygame.display.flip()
+
+
 def str_to_object(string):
     global char_objects
     char_objects = []
@@ -205,7 +210,8 @@ def timer(time_period, current_time):
     pygame.display.flip()
     if current_time != (int(time_period - (time.time() - start))):
         current_time = int(time_period - (time.time() - start))
-        print(current_time)
+        if current_time <= 0:
+            current_time = 0
         clock = button.draw_bordered_rounded_rect(screen, (790, 540, 150, 50), (139, 0, 0), (0, 0, 0), 10, 0, str(current_time), (0, 255, 0), (850, 555))
 
 
@@ -238,6 +244,7 @@ def run_level(level):
     while running:
         for event in pygame.event.get():
             if (index == len(str)):
+                draw_cursor()
                 end = time.time()
                 totalTime = levels.ElapsedTime(end, start)
                 next = levels.checkAdvancement(totalTime, total_time)
